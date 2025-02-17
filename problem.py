@@ -5,9 +5,9 @@ from pathlib import Path
 
 from sklearn.model_selection import StratifiedShuffleSplit
 
-problem_title = 'Template RAMP kit to create data challenges'
-
-_prediction_label_names = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+problem_title = 'Prediction of the avalanche risk'
+_target_column_name = 'risque1'
+_prediction_label_names = [0, 1, 2, 3, 4, 5]
 
 # A type (class) which will be used to create wrapper objects for y_pred
 Predictions = rw.prediction_types.make_multiclass(
@@ -31,8 +31,8 @@ def load_data(path='.', file='X_train.csv'):
     path = Path(path) / "data"
     X_df = pd.read_csv(path / file)
 
-    y = X_df['target']
-    X_df = X_df.drop(columns=['target'])
+    y = X_df[_target_column_name]
+    X_df = X_df.drop(columns=[_target_column_name])
 
     return X_df, y
 
