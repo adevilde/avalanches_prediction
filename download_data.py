@@ -17,25 +17,7 @@ if __name__ == '__main__':
 
     # Clean the data
     X_df = X_df.drop_duplicates()
-    X_df = X_df.drop(columns=['loc1', 'evolurisque2', 'loc2', 'commentaire',
-                              'url_telechargement'])
-    # columns = ['date', 'massif', 'risque1', 'risque2','altitude', 'evolurisque1',
-    #            'risque_maxi', '00_temps', '00_mer_de_nuages',
-    #            '00_limite_pluie_neige', '00_isotherme_0', '00_isotherme_moins_10',
-    #            '00_altitude_vent_1', '00_altitude_vent_2',
-    #            '00_direction_vent_altitude_1', '00_vitesse_vent_altitude_1',
-    #            '00_direction_vent_altitude_2', '00_vitesse_vent_altitude_2',
-    #            '06_temps', '06_mer_de_nuages', '06_limite_pluie_neige',
-    #            '06_isotherme_0', '06_isotherme_moins_10', '06_altitude_vent_1',
-    #            '06_altitude_vent_2', '06_direction_vent_altitude_1',
-    #            '06_vitesse_vent_altitude_1', '06_direction_vent_altitude_2',
-    #            '06_vitesse_vent_altitude_2', '12_temps', '12_mer_de_nuages',
-    #            '12_limite_pluie_neige', '12_isotherme_0', '12_isotherme_moins_10',
-    #            '12_altitude_vent_1', '12_altitude_vent_2',
-    #            '12_direction_vent_altitude_1', '12_vitesse_vent_altitude_1',
-    #            '12_direction_vent_altitude_2', '12_vitesse_vent_altitude_2',
-    #            'precipitation_neige_veille_altitude', 'precipitation_neige_veille_epaisseur'
-    #         ]
+    X_df = X_df.drop(columns=['commentaire', 'url_telechargement'])
 
     # Preprocess the data
     X_df = X_df.dropna(subset=['risque1'])
