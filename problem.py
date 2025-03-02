@@ -30,6 +30,14 @@ features_to_convert = ['precipitation_neige_veille_altitude',
                        'altitude_vent_2', 'vitesse_vent_altitude_1',
                        'vitesse_vent_altitude_2']
 
+# Features to keep after feature engineering
+# (features that have a correlation with the target greater than 0.1)
+features_to_keep = ['evolurisque1', 'evolurisque2', 'altitude',
+                    'precipitation_neige_veille_epaisseur',
+                    'limite_pluie_neige', 'isotherme_0',
+                    'isotherme_moins_10', 'vitesse_vent_altitude_1',
+                    'is_pluie', 'risque_maxi']
+
 
 def get_cv(X, y):
     cv = StratifiedShuffleSplit(n_splits=8, test_size=0.2, random_state=57)
@@ -121,14 +129,13 @@ def load_data(path='.', file='X_train.csv'):
     X_df = convert_object_to_int(X_df, features_to_convert)
 
     # Feature engineering
-    print(file.name)
     if file.name != "bera_clean.csv":
-        numeric_data = X_df.select_dtypes(include=['number'])
-        corr_matrix = numeric_data.corr()
-        features = corr_matrix[_target_column_name][
-            abs(corr_matrix[_target_column_name]) > 0.1].index.tolist()
-        features = [f for f in features if f not in ["risque1", "risque2"]]
-        X_df = X_df[features]
+        # numeric_data = X_df.select_dtypes(include=['number'])
+        # corr_matrix = numeric_data.corr()
+        # features = corr_matrix[_target_column_name][
+        #     abs(corr_matrix[_target_column_name]) > 0.1].index.tolist()
+        # features = [f for f in features if f not in ["risque1", "risque2"]]
+        X_df = X_df[features_to_keep]
 
     y = X_df[_target_column_name]
     X_df = X_df.drop(columns=[_target_column_name])
@@ -137,13 +144,13 @@ def load_data(path='.', file='X_train.csv'):
 
 
 # READ DATA
-def get_train_data(massif, path='.'):
+def get_train_data(path='.', massif='ANDORRE'):
     folder = Path(path) / "data" / massif
     file = folder / 'X_train.csv'
     return load_data(path, file)
 
 
-def get_test_data(massif, path='.'):
+def get_test_data(path='.', massif='ANDORRE'):
     folder = Path(path) / "data" / massif
     file = folder / 'X_test.csv'
     return load_data(path, file)
