@@ -1,7 +1,6 @@
 import rampwf as rw
 
 import pandas as pd
-import numpy as np
 from pathlib import Path
 
 from sklearn.model_selection import StratifiedShuffleSplit
@@ -102,16 +101,15 @@ def convert_object_to_int(df, columns_to_convert):
         column_data_numeric = pd.to_numeric(df[col], errors='coerce')
         if col == 'precipitation_neige_veille_epaisseur':
             df['is_pluie'] = (df[col] == "Pluie").astype(int)
-            column_data_numeric = np.nan_to_num(
-                                    column_data_numeric, nan=-1).astype(int)
         if col == 'mer_de_nuages':
+            df['no_mer_de_nuages'] = (df[col] == "Non").astype(int)
             column_data_numeric = df[col].replace({
                 "Non": 0,
                 "Absence de données": -1
             }).infer_objects(copy=False).astype(int)
-        else:
-            column_data_numeric = np.nan_to_num(
-                                    column_data_numeric, nan=-1).astype(int)
+        column_data_numeric = column_data_numeric.ffill()
+        if column_data_numeric.isnull().sum() > 0:
+            column_data_numeric = column_data_numeric.bfill()
         df[col] = column_data_numeric
     return df
 

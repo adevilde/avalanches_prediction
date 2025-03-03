@@ -26,11 +26,6 @@ if __name__ == '__main__':
 
     # Fill missing values
     X_df['risque2'] = X_df['risque2'].fillna(X_df['risque1'])
-    X_df['evolurisque1'] = X_df['evolurisque1'].fillna(
-                                                X_df['evolurisque1'].mean())
-    X_df['evolurisque2'] = X_df['evolurisque2'].fillna(
-                                                X_df['evolurisque2'].mean())
-    X_df['altitude'] = X_df['altitude'].fillna(X_df['altitude'].mean())
 
     # Convert date to datetime
     X_df['date'] = pd.to_datetime(X_df['date'])
@@ -48,6 +43,11 @@ if __name__ == '__main__':
         # Create folder for the massif
         massif_folder = DATA_PATH / massif
         massif_folder.mkdir(parents=True, exist_ok=True)
+
+        # Fill missing values by bfill
+        df['evolurisque1'] = df['evolurisque1'].ffill()
+        df['evolurisque2'] = df['evolurisque2'].ffill()
+        df['altitude'] = df['altitude'].ffill()
 
         # Split data
         X_train = df[df['date'].dt.year < 2023]
