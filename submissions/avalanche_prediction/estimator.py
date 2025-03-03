@@ -6,13 +6,15 @@ from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
 
+num_features = ['evolurisque1', 'evolurisque2', 'altitude',
+                'precipitation_neige_veille_epaisseur', 'limite_pluie_neige',
+                'isotherme_0', 'isotherme_moins_10', 'vitesse_vent_altitude_1',
+                'is_pluie']
+cat_features = ['temps', 'direction_vent_altitude_1',
+                'direction_vent_altitude_2']
 
-def get_estimator(df_final):
-    # Identify numerical and categorical features
-    num_features = df_final.select_dtypes(
-        include=['int64', 'float64']).columns.tolist()
-    cat_features = df_final.select_dtypes(
-        include=['object', 'category']).columns.tolist()
+
+def get_estimator():
 
     # Preprocessing Pipelines
     num_pipeline = make_pipeline(

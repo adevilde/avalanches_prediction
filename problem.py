@@ -32,7 +32,9 @@ features_to_convert = ['precipitation_neige_veille_altitude',
 
 # Features to keep after feature engineering
 # (features that have a correlation with the target greater than 0.1)
-features_to_keep = ['evolurisque1', 'evolurisque2', 'altitude',
+features_to_keep = ['temps', 'direction_vent_altitude_1',
+                    'direction_vent_altitude_2', 'evolurisque1',
+                    'evolurisque2', 'altitude',
                     'precipitation_neige_veille_epaisseur',
                     'limite_pluie_neige', 'isotherme_0',
                     'isotherme_moins_10', 'vitesse_vent_altitude_1',
@@ -144,13 +146,13 @@ def load_data(path='.', file='X_train.csv'):
 
 
 # READ DATA
-def get_train_data(path='.', massif='ANDORRE'):
+def get_train_data(massif='ANDORRE', path='.'):
     folder = Path(path) / "data" / massif
     file = folder / 'X_train.csv'
     return load_data(path, file)
 
 
-def get_test_data(path='.', massif='ANDORRE'):
+def get_test_data(massif='ANDORRE', path='.'):
     folder = Path(path) / "data" / massif
     file = folder / 'X_test.csv'
     return load_data(path, file)
